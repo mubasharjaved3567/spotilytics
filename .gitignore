@@ -1,0 +1,32 @@
+# Secrets — never commit
+.env
+.kaggle/
+kaggle.json
+
+# Data — too large for git
+data/
+ml/models/
+
+# Logs
+logs/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+venv/
+env/
+.venv/
+*.egg-info/
+
+# PySpark / Java
+derby.log
+metastore_db/
+spark-warehouse/
+
+# VS Code
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
