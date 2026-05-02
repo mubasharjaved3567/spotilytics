@@ -67,6 +67,20 @@ TABLES = {
             duration_ms       INTEGER
         )
     """,
+    "artist_profiles": """
+        CREATE TABLE IF NOT EXISTS artist_profiles (
+            artist_name       VARCHAR(200) PRIMARY KEY,
+            origin_country    VARCHAR(100),
+            career_start      INTEGER,
+            style_description TEXT,
+            fun_fact          TEXT,
+            audio_analysis    TEXT,
+            career_insight    TEXT,
+            similar_artists   TEXT,
+            signature_sound   VARCHAR(200),
+            generated_at      TIMESTAMP DEFAULT NOW()
+        )
+    """,
 }
 
 
