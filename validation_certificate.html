@@ -6,228 +6,188 @@
 <title>Spotilytics — Data Validation Certificate</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
 <style>
-  :root {
-    --green: #1db954;
-    --bg: #0a0a0a;
-    --bg2: #111;
-    --bg3: #1a1a1a;
-    --border: rgba(255,255,255,0.08);
-    --text: #f0f0f0;
-    --muted: #888;
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 14px;
-    line-height: 1.6;
-    padding: 2rem;
-    max-width: 1100px;
-    margin: 0 auto;
-  }
-
-  .header {
-    text-align: center;
-    padding: 3rem 2rem 2rem;
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    background: var(--bg2);
-    margin-bottom: 2rem;
-    position: relative;
-    overflow: hidden;
-  }
-  .header::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, #1db954, #4fc3f7, #ffb400, #1db954);
-  }
-  .header-logo { font-size: 3rem; margin-bottom: 0.5rem; }
-  .header-title {
-    font-family: 'Syne', sans-serif;
-    font-size: 2.4rem;
-    font-weight: 800;
-    letter-spacing: -1px;
-  }
-  .header-title span { color: var(--green); }
-  .header-sub { color: var(--muted); font-size: 13px; margin-top: 6px; }
-  .header-date { color: var(--muted); font-size: 12px; margin-top: 4px; }
-  .header-badge {
-    display: inline-block;
-    margin-top: 1rem;
-    padding: 6px 20px;
-    background: rgba(29,185,84,0.12);
-    border: 1px solid rgba(29,185,84,0.3);
-    border-radius: 20px;
-    color: var(--green);
-    font-size: 12px;
-    font-weight: 500;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-  }
-
-  .meta-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 12px;
-    margin-bottom: 2rem;
-  }
-  .meta-card {
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 1.2rem;
-    text-align: center;
-  }
-  .meta-label { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); margin-bottom: 6px; }
-  .meta-value { font-family: 'Syne', sans-serif; font-size: 1.5rem; font-weight: 700; color: var(--green); }
-  .meta-sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
-
-  .section { margin-bottom: 2rem; }
-  .section-title {
-    font-family: 'Syne', sans-serif;
-    font-size: 12px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    color: var(--muted);
-    margin-bottom: 12px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .section-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
-
-  .score-banner {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1rem 1.5rem;
-    border-radius: 10px;
-    margin-bottom: 12px;
-  }
-  .score-banner.perfect { background: rgba(29,185,84,0.1); border: 1px solid rgba(29,185,84,0.3); }
-  .score-banner.partial { background: rgba(255,180,0,0.08); border: 1px solid rgba(255,180,0,0.2); }
-  .score-left { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; }
-  .score-note { font-size: 12px; color: var(--muted); margin-top: 2px; }
-  .score-right { font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 800; }
-  .score-banner.perfect .score-right { color: var(--green); }
-  .score-banner.partial .score-right { color: #ffb400; }
-
-  .checks-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-  .check-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 9px 14px;
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    font-size: 12px;
-  }
-  .check-item.pass { border-left: 3px solid var(--green); }
-  .check-item.fail { border-left: 3px solid #ff6b6b; opacity: 0.6; }
-  .check-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
-  .check-dot.pass { background: var(--green); }
-  .check-dot.fail { background: #ff6b6b; }
-  .check-name { flex: 1; color: var(--text); }
-  .check-status { font-size: 11px; font-weight: 600; }
-  .check-status.pass { color: var(--green); }
-  .check-status.fail { color: #ff6b6b; }
-
-  .metrics-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 12px;
-    margin-bottom: 1.5rem;
-  }
-  .metric-card {
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 1.2rem;
-    text-align: center;
-  }
-  .metric-label { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); margin-bottom: 6px; }
-  .metric-value { font-family: 'Syne', sans-serif; font-size: 1.6rem; font-weight: 800; color: var(--green); }
-
-  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-
-  .feat-row { margin-bottom: 10px; }
-  .feat-header { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 4px; }
-  .feat-name { color: var(--text); }
-  .feat-val { color: var(--green); font-weight: 500; }
-  .feat-track { height: 5px; background: var(--bg3); border-radius: 3px; overflow: hidden; }
-  .feat-fill { height: 100%; background: var(--green); border-radius: 3px; }
-
-  .card { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 1.4rem; }
-  .card-title { font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); margin-bottom: 1rem; }
-
-  table { width: 100%; border-collapse: collapse; font-size: 13px; }
-  th { padding: 8px 14px; background: var(--bg3); color: var(--muted); font-weight: 500; text-align: center; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; }
-  td { padding: 9px 14px; border-top: 1px solid var(--border); text-align: center; }
-  td.correct { color: var(--green); font-weight: 600; }
-  td.label-cell { color: var(--muted); text-align: left; font-weight: 500; }
-
-  .dist-row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
-  .dist-label { font-size: 12px; width: 40px; color: var(--text); }
-  .dist-track { flex: 1; height: 8px; background: var(--bg3); border-radius: 4px; overflow: hidden; }
-  .dist-fill { height: 100%; border-radius: 4px; }
-  .dist-fill.low  { background: #ff6b6b; }
-  .dist-fill.mid  { background: #ffb400; }
-  .dist-fill.high { background: var(--green); }
-  .dist-pct { font-size: 12px; color: var(--muted); width: 50px; text-align: right; }
-
-  .footer {
-    margin-top: 3rem;
-    text-align: center;
-    padding: 2rem;
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    background: var(--bg2);
-    position: relative;
-    overflow: hidden;
-  }
-  .footer::before {
-    content: '';
-    position: absolute;
-    bottom: 0; left: 0; right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, #1db954, #4fc3f7, #ffb400, #1db954);
-  }
-  .footer-title { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 800; margin-bottom: 6px; }
-  .footer-sub { color: var(--muted); font-size: 13px; margin-bottom: 1rem; }
-  .team-grid { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin: 1rem 0; }
-  .team-pill {
-    padding: 6px 16px;
-    background: var(--bg3);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    font-size: 12px;
-    color: var(--text);
-  }
-  .stamp {
-    display: inline-block;
-    margin-top: 1.2rem;
-    padding: 10px 28px;
-    background: rgba(29,185,84,0.12);
-    border: 2px solid rgba(29,185,84,0.4);
-    border-radius: 8px;
-    color: var(--green);
-    font-family: 'Syne', sans-serif;
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-  }
-
-  @media print {
-    body { background: white; color: #111; padding: 1rem; }
-    .header, .meta-card, .check-item, .metric-card, .footer, .card { background: #f9f9f9 !important; border-color: #ddd !important; }
-    .header::before, .footer::before { display: none; }
-  }
+:root {
+  --green: #1db954;
+  --bg: #0a0a0a;
+  --bg2: #111;
+  --bg3: #1a1a1a;
+  --border: rgba(255,255,255,0.08);
+  --text: #f0f0f0;
+  --muted: #888;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  padding: 2rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.header {
+  text-align: center;
+  padding: 3rem 2rem 2rem;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--bg2);
+  margin-bottom: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+.header::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #1db954, #4fc3f7, #ffb400, #1db954);
+}
+.header-logo { font-size: 3rem; margin-bottom: 0.5rem; }
+.header-title { font-family: 'Syne', sans-serif; font-size: 2.4rem; font-weight: 800; letter-spacing: -1px; }
+.header-title span { color: var(--green); }
+.header-sub { color: var(--muted); font-size: 13px; margin-top: 6px; }
+.header-date { color: var(--muted); font-size: 12px; margin-top: 4px; }
+.header-badge {
+  display: inline-block; margin-top: 1rem;
+  padding: 6px 20px;
+  background: rgba(29,185,84,0.12);
+  border: 1px solid rgba(29,185,84,0.3);
+  border-radius: 20px; color: var(--green);
+  font-size: 12px; font-weight: 500; letter-spacing: 1px; text-transform: uppercase;
+}
+.meta-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; margin-bottom: 2rem; }
+.meta-card {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: 12px; padding: 1.2rem; text-align: center;
+}
+.meta-label { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); margin-bottom: 6px; }
+.meta-value { font-family: 'Syne', sans-serif; font-size: 1.5rem; font-weight: 700; color: var(--green); }
+.meta-sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
+.section { margin-bottom: 2rem; }
+.section-title {
+  font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 1.5px; color: var(--muted);
+  margin-bottom: 12px; display: flex; align-items: center; gap: 8px;
+}
+.section-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+.score-banner {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1rem 1.5rem; border-radius: 10px; margin-bottom: 12px;
+}
+.score-banner.perfect { background: rgba(29,185,84,0.1); border: 1px solid rgba(29,185,84,0.3); }
+.score-banner.partial { background: rgba(255,180,0,0.08); border: 1px solid rgba(255,180,0,0.2); }
+.score-left { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; }
+.score-note { font-size: 12px; color: var(--muted); margin-top: 2px; }
+.score-right { font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 800; }
+.score-banner.perfect .score-right { color: var(--green); }
+.score-banner.partial .score-right { color: #ffb400; }
+.checks-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.check-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 14px; background: var(--bg2);
+  border: 1px solid var(--border); border-radius: 8px; font-size: 12px;
+}
+.check-item.pass { border-left: 3px solid var(--green); }
+.check-item.fail { border-left: 3px solid #ff6b6b; opacity: 0.6; }
+.check-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+.check-dot.pass { background: var(--green); }
+.check-dot.fail { background: #ff6b6b; }
+.check-name { flex: 1; color: var(--text); }
+.check-status { font-size: 11px; font-weight: 600; }
+.check-status.pass { color: var(--green); }
+.check-status.fail { color: #ff6b6b; }
+.metrics-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; margin-bottom: 1.5rem; }
+.metric-card {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: 12px; padding: 1.2rem; text-align: center;
+}
+.metric-label { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); margin-bottom: 6px; }
+.metric-value { font-family: 'Syne', sans-serif; font-size: 1.6rem; font-weight: 800; color: var(--green); }
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.card { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 1.4rem; }
+.card-title { font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); margin-bottom: 1rem; }
+.feat-row { margin-bottom: 10px; }
+.feat-header { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 4px; }
+.feat-name { color: var(--text); }
+.feat-val { color: var(--green); font-weight: 500; }
+.feat-track { height: 5px; background: var(--bg3); border-radius: 3px; overflow: hidden; }
+.feat-fill { height: 100%; background: var(--green); border-radius: 3px; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th { padding: 8px 14px; background: var(--bg3); color: var(--muted); font-weight: 500; text-align: center; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; }
+td { padding: 9px 14px; border-top: 1px solid var(--border); text-align: center; }
+td.correct { color: var(--green); font-weight: 600; }
+td.label-cell { color: var(--muted); text-align: left; font-weight: 500; }
+.dist-row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+.dist-label { font-size: 12px; width: 40px; color: var(--text); }
+.dist-track { flex: 1; height: 8px; background: var(--bg3); border-radius: 4px; overflow: hidden; }
+.dist-fill { height: 100%; border-radius: 4px; }
+.dist-fill.low  { background: #ff6b6b; }
+.dist-fill.mid  { background: #ffb400; }
+.dist-fill.high { background: var(--green); }
+.dist-pct { font-size: 12px; color: var(--muted); width: 50px; text-align: right; }
+.pipeline-grid { display: grid; grid-template-columns: repeat(5,1fr); gap: 10px; margin-bottom: 2rem; }
+.pipeline-step {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: 12px; padding: 1rem; text-align: center; position: relative;
+}
+.pipeline-step::after {
+  content: '→'; position: absolute; right: -14px; top: 50%;
+  transform: translateY(-50%); color: var(--green); font-size: 16px; z-index: 1;
+}
+.pipeline-step:last-child::after { display: none; }
+.pipeline-icon { font-size: 24px; margin-bottom: 6px; }
+.pipeline-name { font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700; color: var(--text); }
+.pipeline-tech { font-size: 10px; color: var(--muted); margin-top: 2px; }
+.cleaning-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-bottom: 12px; }
+.cleaning-card {
+  background: var(--bg3); border: 1px solid var(--border);
+  border-radius: 10px; padding: 1rem; text-align: center;
+}
+.cleaning-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+.cleaning-value { font-family: 'Syne', sans-serif; font-size: 1.3rem; font-weight: 700; }
+.cleaning-value.before { color: #ffb400; }
+.cleaning-value.after  { color: var(--green); }
+.cleaning-value.removed { color: #ff6b6b; }
+.cleaning-sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
+.removal-table { width: 100%; }
+.removal-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 8px 14px; background: var(--bg3); border-radius: 8px; margin-bottom: 6px;
+  font-size: 13px;
+}
+.removal-reason { color: var(--text); }
+.removal-count { color: #ff6b6b; font-weight: 600; font-family: 'Syne', sans-serif; }
+.retention-bar {
+  height: 8px; background: var(--bg3); border-radius: 4px;
+  overflow: hidden; margin-top: 12px;
+}
+.retention-fill { height: 100%; background: var(--green); border-radius: 4px; width: 99.67%; }
+.footer {
+  margin-top: 3rem; text-align: center; padding: 2rem;
+  border: 1px solid var(--border); border-radius: 16px; background: var(--bg2);
+  position: relative; overflow: hidden;
+}
+.footer::before {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 4px;
+  background: linear-gradient(90deg, #1db954, #4fc3f7, #ffb400, #1db954);
+}
+.footer-title { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 800; margin-bottom: 6px; }
+.footer-sub { color: var(--muted); font-size: 13px; margin-bottom: 1rem; }
+.team-grid { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin: 1rem 0; }
+.team-pill { padding: 6px 16px; background: var(--bg3); border: 1px solid var(--border); border-radius: 20px; font-size: 12px; color: var(--text); }
+.stamp {
+  display: inline-block; margin-top: 1.2rem; padding: 10px 28px;
+  background: rgba(29,185,84,0.12); border: 2px solid rgba(29,185,84,0.4);
+  border-radius: 8px; color: var(--green);
+  font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase;
+}
+@media print {
+  body { background: white; color: #111; padding: 1rem; }
+  .header, .meta-card, .check-item, .metric-card, .footer, .card, .pipeline-step, .cleaning-card { background: #f9f9f9 !important; border-color: #ddd !important; }
+  .header::before, .footer::before { display: none; }
+}
 </style>
 </head>
 <body>
@@ -245,33 +205,116 @@
 <div class="meta-grid">
   <div class="meta-card">
     <div class="meta-label">Raw tracks</div>
-    <div class="meta-value">1.47M</div>
+    <div class="meta-value">1,159,764</div>
     <div class="meta-sub">Before cleaning</div>
   </div>
   <div class="meta-card">
     <div class="meta-label">Clean tracks</div>
-    <div class="meta-value">1.155M</div>
+    <div class="meta-value">1,155,971</div>
     <div class="meta-sub">After cleaning</div>
+  </div>
+  <div class="meta-card">
+    <div class="meta-label">Data retained</div>
+    <div class="meta-value">99.67%</div>
+    <div class="meta-sub">Only 0.33% removed</div>
   </div>
   <div class="meta-card">
     <div class="meta-label">Years covered</div>
     <div class="meta-value">24</div>
     <div class="meta-sub">2000 – 2023</div>
   </div>
-  <div class="meta-card">
-    <div class="meta-label">Audio features</div>
-    <div class="meta-value">20</div>
-    <div class="meta-sub">Per track</div>
+</div>
+
+<!-- Pipeline -->
+<div class="section">
+  <div class="section-title">End-to-end pipeline</div>
+  <div class="pipeline-grid">
+    <div class="pipeline-step">
+      <div class="pipeline-icon">📥</div>
+      <div class="pipeline-name">Ingest</div>
+      <div class="pipeline-tech">Kaggle API</div>
+    </div>
+    <div class="pipeline-step">
+      <div class="pipeline-icon">🔍</div>
+      <div class="pipeline-name">Validate</div>
+      <div class="pipeline-tech">Great Expectations</div>
+    </div>
+    <div class="pipeline-step">
+      <div class="pipeline-icon">🧹</div>
+      <div class="pipeline-name">Clean</div>
+      <div class="pipeline-tech">PySpark</div>
+    </div>
+    <div class="pipeline-step">
+      <div class="pipeline-icon">🗄️</div>
+      <div class="pipeline-name">Store</div>
+      <div class="pipeline-tech">PostgreSQL</div>
+    </div>
+    <div class="pipeline-step">
+      <div class="pipeline-icon">🤖</div>
+      <div class="pipeline-name">ML + API</div>
+      <div class="pipeline-tech">MLlib + FastAPI</div>
+    </div>
+  </div>
+</div>
+
+<!-- Data cleaning summary -->
+<div class="section">
+  <div class="section-title">Data cleaning summary</div>
+  <div class="cleaning-grid">
+    <div class="cleaning-card">
+      <div class="cleaning-label">Before cleaning</div>
+      <div class="cleaning-value before">1,159,764</div>
+      <div class="cleaning-sub">Raw CSV rows</div>
+    </div>
+    <div class="cleaning-card">
+      <div class="cleaning-label">After cleaning</div>
+      <div class="cleaning-value after">1,155,971</div>
+      <div class="cleaning-sub">Clean Parquet rows</div>
+    </div>
+    <div class="cleaning-card">
+      <div class="cleaning-label">Rows removed</div>
+      <div class="cleaning-value removed">3,793</div>
+      <div class="cleaning-sub">0.33% of total</div>
+    </div>
+  </div>
+
+  <div class="removal-table">
+    <div class="removal-row">
+      <span class="removal-reason">🔁 Duplicate track_ids removed</span>
+      <span class="removal-count">~2,341 rows</span>
+    </div>
+    <div class="removal-row">
+      <span class="removal-reason">🚫 Null artist/track names dropped</span>
+      <span class="removal-count">~1,205 rows</span>
+    </div>
+    <div class="removal-row">
+      <span class="removal-reason">⚠️ Outliers filtered (tempo=0, loudness≥0, duration&lt;30s)</span>
+      <span class="removal-count">~247 rows</span>
+    </div>
+    <div class="removal-row">
+      <span class="removal-reason">🔧 Bad values fixed (key=-1 → null)</span>
+      <span class="removal-count">0 rows removed</span>
+    </div>
+  </div>
+
+  <div style="margin-top:12px;">
+    <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:4px;">
+      <span>Data retention rate</span>
+      <span style="color:var(--green);font-weight:600;">99.67%</span>
+    </div>
+    <div class="retention-bar">
+      <div class="retention-fill"></div>
+    </div>
   </div>
 </div>
 
 <!-- Raw validation -->
 <div class="section">
-  <div class="section-title">Stage 1 — Raw data validation</div>
+  <div class="section-title">Stage 1 — Raw data validation (pre-cleaning)</div>
   <div class="score-banner partial">
     <div>
-      <div class="score-left">Raw CSV — Pre-cleaning checks</div>
-      <div class="score-note">Failures expected — fixed by PySpark cleaning pipeline</div>
+      <div class="score-left">Raw CSV — 18 checks · 1,159,764 rows</div>
+      <div class="score-note">Failures expected — fixed by PySpark cleaning pipeline · Timestamp: 2026-04-30 04:56:58</div>
     </div>
     <div class="score-right">13 / 18</div>
   </div>
@@ -302,8 +345,8 @@
   <div class="section-title">Stage 2 — Cleaned data validation (post PySpark)</div>
   <div class="score-banner perfect">
     <div>
-      <div class="score-left">Cleaned Parquet — Post-cleaning checks</div>
-      <div class="score-note">All checks must pass — pipeline halts on any failure</div>
+      <div class="score-left">Cleaned Parquet — 16 checks · 1,155,971 rows</div>
+      <div class="score-note">All checks must pass — pipeline halts on any failure · Timestamp: 2026-04-30 05:00:48</div>
     </div>
     <div class="score-right">16 / 16</div>
   </div>
@@ -329,32 +372,19 @@
 
 <!-- ML Metrics -->
 <div class="section">
-  <div class="section-title">Stage 3 — ML model evaluation (BopOrFlop)</div>
+  <div class="section-title">Stage 3 — ML model evaluation · BopOrFlop · Timestamp: 2026-04-30 05:03:46</div>
   <div class="metrics-grid">
-    <div class="metric-card">
-      <div class="metric-label">F1 Score</div>
-      <div class="metric-value">0.7516</div>
-    </div>
-    <div class="metric-card">
-      <div class="metric-label">Accuracy</div>
-      <div class="metric-value">79.98%</div>
-    </div>
-    <div class="metric-card">
-      <div class="metric-label">Precision</div>
-      <div class="metric-value">0.7664</div>
-    </div>
-    <div class="metric-card">
-      <div class="metric-label">Recall</div>
-      <div class="metric-value">0.7998</div>
-    </div>
+    <div class="metric-card"><div class="metric-label">F1 Score</div><div class="metric-value">0.7516</div></div>
+    <div class="metric-card"><div class="metric-label">Accuracy</div><div class="metric-value">79.98%</div></div>
+    <div class="metric-card"><div class="metric-label">Precision</div><div class="metric-value">0.7664</div></div>
+    <div class="metric-card"><div class="metric-label">Recall</div><div class="metric-value">0.7998</div></div>
   </div>
 
   <div class="two-col">
-    <!-- Feature importance -->
     <div class="card">
       <div class="card-title">Feature importance</div>
       <div class="feat-row"><div class="feat-header"><span class="feat-name">year</span><span class="feat-val">44.8%</span></div><div class="feat-track"><div class="feat-fill" style="width:100%"></div></div></div>
-      <div class="feat-row"><div class="feat-header"><span class="feat-name">genre</span><span class="feat-val">17.9%</span></div><div class="feat-track"><div class="feat-fill" style="width:40%"></div></div></div>
+      <div class="feat-row"><div class="feat-header"><span class="feat-name">genre_idx</span><span class="feat-val">17.9%</span></div><div class="feat-track"><div class="feat-fill" style="width:40%"></div></div></div>
       <div class="feat-row"><div class="feat-header"><span class="feat-name">duration_ms</span><span class="feat-val">9.6%</span></div><div class="feat-track"><div class="feat-fill" style="width:21%"></div></div></div>
       <div class="feat-row"><div class="feat-header"><span class="feat-name">instrumentalness</span><span class="feat-val">6.3%</span></div><div class="feat-track"><div class="feat-fill" style="width:14%"></div></div></div>
       <div class="feat-row"><div class="feat-header"><span class="feat-name">danceability</span><span class="feat-val">5.0%</span></div><div class="feat-track"><div class="feat-fill" style="width:11%"></div></div></div>
@@ -362,18 +392,16 @@
       <div class="feat-row"><div class="feat-header"><span class="feat-name">acousticness</span><span class="feat-val">4.2%</span></div><div class="feat-track"><div class="feat-fill" style="width:9%"></div></div></div>
       <div class="feat-row"><div class="feat-header"><span class="feat-name">valence</span><span class="feat-val">2.1%</span></div><div class="feat-track"><div class="feat-fill" style="width:5%"></div></div></div>
       <div class="feat-row"><div class="feat-header"><span class="feat-name">energy</span><span class="feat-val">2.0%</span></div><div class="feat-track"><div class="feat-fill" style="width:4%"></div></div></div>
+      <div class="feat-row"><div class="feat-header"><span class="feat-name">speechiness</span><span class="feat-val">1.7%</span></div><div class="feat-track"><div class="feat-fill" style="width:4%"></div></div></div>
+      <div class="feat-row"><div class="feat-header"><span class="feat-name">liveness</span><span class="feat-val">1.5%</span></div><div class="feat-track"><div class="feat-fill" style="width:3%"></div></div></div>
       <div class="feat-row"><div class="feat-header"><span class="feat-name">tempo</span><span class="feat-val">0.4%</span></div><div class="feat-track"><div class="feat-fill" style="width:1%"></div></div></div>
     </div>
 
-    <!-- Right column -->
     <div style="display:flex;flex-direction:column;gap:16px;">
-      <!-- Confusion matrix -->
       <div class="card">
-        <div class="card-title">Confusion matrix</div>
+        <div class="card-title">Confusion matrix (Low=0, Mid=1, High=2)</div>
         <table>
-          <thead>
-            <tr><th>Actual / Pred</th><th>Low (0)</th><th>Mid (1)</th></tr>
-          </thead>
+          <thead><tr><th>Actual / Pred</th><th>Low (0)</th><th>Mid (1)</th></tr></thead>
           <tbody>
             <tr><td class="label-cell">Low (0)</td><td class="correct">174,814</td><td>4,040</td></tr>
             <tr><td class="label-cell">Mid (1)</td><td>39,349</td><td class="correct">9,864</td></tr>
@@ -382,25 +410,11 @@
         </table>
       </div>
 
-      <!-- Class distribution -->
       <div class="card">
-        <div class="card-title">Label distribution</div>
-        <div class="dist-row">
-          <div class="dist-label">Low</div>
-          <div class="dist-track"><div class="dist-fill low" style="width:77.5%"></div></div>
-          <div class="dist-pct">77.5%</div>
-        </div>
-        <div class="dist-row">
-          <div class="dist-label">Mid</div>
-          <div class="dist-track"><div class="dist-fill mid" style="width:21.3%"></div></div>
-          <div class="dist-pct">21.3%</div>
-        </div>
-        <div class="dist-row">
-          <div class="dist-label">High</div>
-          <div class="dist-track"><div class="dist-fill high" style="width:1.2%"></div></div>
-          <div class="dist-pct">1.2%</div>
-        </div>
-
+        <div class="card-title">Label distribution (real data)</div>
+        <div class="dist-row"><div class="dist-label">Low</div><div class="dist-track"><div class="dist-fill low" style="width:77.5%"></div></div><div class="dist-pct">77.5%</div></div>
+        <div class="dist-row"><div class="dist-label">Mid</div><div class="dist-track"><div class="dist-fill mid" style="width:21.3%"></div></div><div class="dist-pct">21.3%</div></div>
+        <div class="dist-row"><div class="dist-label">High</div><div class="dist-track"><div class="dist-fill high" style="width:1.2%"></div></div><div class="dist-pct">1.2%</div></div>
         <div style="margin-top:1rem;padding:10px;background:var(--bg3);border-radius:8px;font-size:12px;color:var(--muted);">
           Train: 925,066 rows &nbsp;|&nbsp; Test: 230,905 rows &nbsp;|&nbsp; Split: 80/20
         </div>
@@ -409,7 +423,7 @@
   </div>
 </div>
 
-<!-- Model info -->
+<!-- Model config -->
 <div class="section">
   <div class="section-title">Model configuration</div>
   <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;">
@@ -423,7 +437,7 @@
 <!-- Footer -->
 <div class="footer">
   <div class="footer-title">Spotilytics — AI-620 Data Engineering Pipeline</div>
-  <div class="footer-sub">End-to-end pipeline: Kaggle → PySpark → PostgreSQL → MLlib → FastAPI → React</div>
+  <div class="footer-sub">Kaggle → PySpark → Great Expectations → PostgreSQL → MLlib → FastAPI → React → Deployed on Render + Vercel</div>
   <div class="team-grid">
     <div class="team-pill">Sidra Zubair</div>
     <div class="team-pill">Nusrat Abeer Hyder</div>

@@ -1,16 +1,16 @@
-FROM python:3.12-slim
+FROM python:3.11-slim
 
 WORKDIR /app
 
 RUN apt-get update && \
-    apt-get install -y openjdk-17-jdk && \
+    apt-get install -y default-jdk curl && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+ENV JAVA_HOME=/usr/lib/jvm/default-java
 
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+COPY requirements-api.txt .
+RUN pip install --no-cache-dir -r requirements-api.txt
 
 COPY . .
 
