@@ -5,7 +5,9 @@ import {
 } from 'recharts';
 import axios from 'axios';
 
-const API = axios.create({ baseURL: 'http://localhost:8000' });
+const API = axios.create({ 
+  baseURL: process.env.REACT_APP_API_URL || 'http://localhost:8000' 
+});
 
 const TOOLTIP_STYLE = {
   backgroundColor: '#1a1a1a',
