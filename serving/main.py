@@ -44,12 +44,21 @@ _predict_fn = None
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     global _predict_fn
+    # Try lightweight sklearn model first (works on Render)
     try:
-        from ml.predict import predict
+        from ml.predict_render import predict
         _predict_fn = predict
-        print("✅ ML model loaded")
-    except Exception:
-        print("⚠️  ML model not found — run ml/train.py first")
+        print("✅ Sklearn model loaded (Render mode)")
+    except FileNotFoundError:
+        # Fall back to PySpark model (local only)
+        try:
+            from ml.predict import predict
+            _predict_fn = predict
+            print("✅ PySpark model loaded (local mode)")
+        except Exception:
+            print("⚠️  No ML model available — /predict will return 503")
+    except Exception as e:
+        print(f"⚠️  ML model error: {e}")
     yield
 
 
