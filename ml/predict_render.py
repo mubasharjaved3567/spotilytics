@@ -8,6 +8,8 @@ import json
 import logging
 import pickle
 from pathlib import Path
+from pyexpat import features
+from xml.parsers.expat import model
 
 logger   = logging.getLogger(__name__)
 MODEL_PATH = Path("ml/models/rf_model_sklearn.pkl")
@@ -66,9 +68,9 @@ def predict(
         liveness, float(duration_ms), float(year), float(genre_idx)
     ]]
 
-    pred_idx   = int(model.predict(features)[0])
-    proba      = model.predict_proba(features)[0]
-    tier       = classes[pred_idx]
+    tier= model.predict(features)[0]
+    proba= model.predict_proba(features)[0]
+    pred_idx= list(model.classes_).index(tier)
     confidence = round(float(proba[pred_idx]) * 100, 1)
 
     return {
