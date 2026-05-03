@@ -69,7 +69,6 @@ def load_tracks_fast():
 
     cur.close()
     conn.close()
-
     print(f"\n✅ Tracks table populated — {len(pdf):,} rows")
     print("🎵 Artist Explorer is ready!")
 
