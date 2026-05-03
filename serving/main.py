@@ -48,7 +48,7 @@ async def lifespan(app: FastAPI):
         from ml.predict import predict
         _predict_fn = predict
         print("✅ ML model loaded")
-    except FileNotFoundError:
+    except Exception:
         print("⚠️  ML model not found — run ml/train.py first")
     yield
 
