@@ -76,7 +76,7 @@ def train_sklearn():
     # Train
     print("\n⏳ Training sklearn Random Forest (100 trees)...")
     model = RandomForestClassifier(
-        n_estimators=100,
+        n_estimators=20,
         max_depth=15,
         class_weight=weights,
         n_jobs=-1,
